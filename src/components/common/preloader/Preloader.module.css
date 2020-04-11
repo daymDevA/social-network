@@ -1,0 +1,16 @@
+.preloader {
+  background: rgba(111, 156, 234, 0.562);
+  position: absolute;
+  width: 985px;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: row;
+}
+.preloader > img {
+  margin: 0 auto;
+  width: 300px;
+  justify-self: center;
+  align-self: center;
+  height: 150px;
+  z-index: 9999;
+}
