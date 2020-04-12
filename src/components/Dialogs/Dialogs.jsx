@@ -9,20 +9,24 @@ import {
   Button,
   WrapperPost,
 } from "./StyledDialog";
+import { Field, reduxForm } from "redux-form";
 
-const Dialogs = ({
-  sendMessage,
-  onChange,
-  chatData,
-  diadlogData,
-  newMessageText,
-}) => {
-  const onTextChange = (event) => {
-    onChange(event.target.value);
-  };
+let FormNewMessage = ({ handleSubmit }) => {
+  return (
+    <WrapperPost>
+      <form onSubmit={handleSubmit}>
+        <Field name="newMessageText" component="textarea" type="text" />
+        <Button>Sent</Button>
+      </form>
+    </WrapperPost>
+  );
+};
 
-  const addMessage = () => {
-    sendMessage();
+FormNewMessage = reduxForm({ form: "formNewMessage" })(FormNewMessage);
+
+const Dialogs = ({ sendMessage, chatData, diadlogData }) => {
+  const addMessage = (newMessageText) => {
+    sendMessage(newMessageText);
   };
 
   return (
@@ -50,10 +54,9 @@ const Dialogs = ({
           />
         ))}
       </WrapperChatsSection>
-      <WrapperPost>
-        <Textarea onChange={onTextChange} value={newMessageText}></Textarea>
-        <Button onClick={addMessage}>Sent</Button>
-      </WrapperPost>
+      <FormNewMessage
+        onSubmit={(formData) => addMessage(formData.newMessageText)}
+      />
     </WrapperDialogSection>
   );
 };

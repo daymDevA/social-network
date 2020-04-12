@@ -78,19 +78,13 @@ const reducerProfilePage = (state = initialState, action) => {
         postData: [
           {
             id: state.postData.length + 1,
-            message: state.newPostText,
+            message: action.newPostText,
             countLikes: 0,
             countDisLikes: 0,
           },
           ...state.postData,
         ],
         newPostText: "",
-      };
-
-    case UPDATE_TEXT_POST:
-      return {
-        ...state,
-        newPostText: action.text,
       };
 
     case SET_USER_PROFILE:
@@ -131,11 +125,9 @@ export const setStatus = (status) => {
   };
 };
 
-export const addPostActionCreater = () => ({ type: "ADD_POST" });
-
-export const onTextChangeActionCreater = (text) => ({
-  type: "UPDATE_TEXT_POST",
-  text: text,
+export const addPostActionCreater = (newPostText) => ({
+  type: "ADD_POST",
+  newPostText,
 });
 
 export const setUserProfile = (userProfile) => {

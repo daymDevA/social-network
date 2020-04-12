@@ -1,7 +1,4 @@
-import {
-  onTextChangeActionCreater,
-  addPostActionCreater,
-} from "../../../redux/reducerProfilePage";
+import { addPostActionCreater } from "../../../redux/reducerProfilePage";
 import MyPosts from "./MyPosts";
 import { connect } from "react-redux";
 
@@ -14,8 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addPost: () => dispatch(addPostActionCreater()),
-    onChange: (text) => dispatch(onTextChangeActionCreater(text)),
+    addPost: (newTextPost) => dispatch(addPostActionCreater(newTextPost)),
   };
 };
 const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);

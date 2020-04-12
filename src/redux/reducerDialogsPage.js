@@ -1,5 +1,4 @@
 const ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE";
-const UPDATE_TEXT_MESSAGE = "UPDATE_TEXT_MESSAGE";
 
 const initialState = {
   chatData: [
@@ -110,7 +109,6 @@ const initialState = {
         " some te;sdlfksdfs sdfsldkf dsf ger ewd dsfdsfe sd se dfdfwe ds",
     },
   ],
-  newMessageText: "",
 };
 
 const reducerDialogsPage = (state = initialState, action) => {
@@ -120,31 +118,23 @@ const reducerDialogsPage = (state = initialState, action) => {
         id: state.diadlogData.length + 1,
         data: " currentTime()",
         typeMessage: action.typeMessage,
-        message: state.newMessageText,
+        message: action.newMessageText,
       };
       return {
         ...state,
         diadlogData: [...state.diadlogData, newItem],
         newMessageText: "",
       };
-    case UPDATE_TEXT_MESSAGE:
-      return {
-        ...state,
-        newMessageText: action.text,
-      };
+
     default:
       return { ...state };
   }
 };
 
-export const addMessageActionCreater = (typeMessage) => ({
+export const addMessageActionCreater = (typeMessage, newMessageText) => ({
   type: "ADD_NEW_MESSAGE",
   typeMessage: typeMessage,
-});
-
-export const onMessageChangeActionCreater = (text) => ({
-  type: "UPDATE_TEXT_MESSAGE",
-  text: text,
+  newMessageText,
 });
 
 export default reducerDialogsPage;

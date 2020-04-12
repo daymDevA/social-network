@@ -2,23 +2,28 @@ import React from "react";
 import Post from "./Post/Post";
 
 import { WrapperPost, WrapperNewPostCreat } from "./StyledMyPost";
-import { Field } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 
-const MyPosts = ({ addPost, newPostText, onChange, postsData }) => {
-  const onTextChange = (event) => {
-    onChange(event.target.value);
-  };
+let FormNewPost = ({ handleSubmit }) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <WrapperNewPostCreat>
+        <Field name="newPostMessage" component="textarea" type="text" />
+        <button>Sent</button>
+      </WrapperNewPostCreat>
+    </form>
+  );
+};
 
+FormNewPost = reduxForm({ form: "FormNewPost" })(FormNewPost);
+
+const MyPosts = ({ addPost, postsData }) => {
   return (
     <WrapperPost>
       <label>My posts</label>
-
-      <WrapperNewPostCreat>
-        <form>
-          <Field name="newPostMessage" component="textarea" type="text" />
-          <button>Sent</button>
-        </form>
-      </WrapperNewPostCreat>
+      <FormNewPost
+        onSubmit={(formData) => addPost(formData.newPostMessage)}
+      />{" "}
       {postsData.map((post) => (
         <Post
           key={post.id}

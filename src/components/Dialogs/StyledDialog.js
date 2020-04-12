@@ -23,6 +23,23 @@ export const WrapperPost = styled.div`
   display: grid;
   grid-column-start: 2;
   grid-gap: 10px;
+  form {
+    display: block;
+    width: 100%;
+
+    textarea {
+      min-height: 40px;
+      display: block;
+      text-align: start;
+      color: #929292;
+      padding: 10px;
+      width: 97%;
+      background: #f0f0f0;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+  }
 `;
 
 export const Textarea = styled.textarea`
@@ -38,6 +55,7 @@ export const Textarea = styled.textarea`
 
 export const Button = styled.button`
   display: block;
+  float: right;
   width: 90px;
   height: 40px;
   border: none;
