@@ -24,6 +24,8 @@ const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
     false
   );
 
+  const [infoProfile, setInfoProfile] = useState(userProfile);
+
   const [
     isClickedBackgroundEditButton,
     setIsClickedBackgroundEditButton,
@@ -42,7 +44,8 @@ const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
 
   useEffect(() => {
     setStatus(userStatus);
-  }, [userStatus]);
+    setInfoProfile(userProfile);
+  }, [userStatus, userProfile]);
 
   const changeTextStatus = (value) => {
     setStatus(value);
@@ -151,4 +154,4 @@ const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
   );
 };
 
-export default ProfileInfoHook;
+export default React.memo(ProfileInfoHook);

@@ -16,7 +16,7 @@ import "./App.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { setUserData } from "./redux/reducerAuth";
-import Preloader from "./components/common/preloader/Preloader";
+import Preloader from "./components/common/Preloader/Preloader";
 import ProfileAPIContainer from "./components/Profile/ProfileAPIContainer";
 
 class App extends React.Component {

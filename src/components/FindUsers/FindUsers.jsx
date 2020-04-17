@@ -11,6 +11,7 @@ import {
   WrapperUsers,
   WrapperPagination,
 } from "./StyledFindUsersContainer";
+import Pagination from "../common/Pagination/Pagination";
 
 // let usersData = [
 //   {
@@ -74,15 +75,11 @@ class FindUsers extends React.Component {
     const {
       usersData,
       currentPage,
+      totalUsers,
+      usersCountOnPage,
       toggleFollowing,
       setCurrentPage,
     } = this.props;
-
-    let pages = [];
-
-    for (let i = 1; i <= 5; i++) {
-      pages.push(i);
-    }
 
     return (
       <MainWrapper>
@@ -110,16 +107,11 @@ class FindUsers extends React.Component {
         </WrapperUsers>
         <WrapperPagination>
           <div>
-            {pages.map((page) => (
-              <span
-                key={page}
-                onClick={() => {
-                  setCurrentPage(page);
-                }}
-              >
-                {page}
-              </span>
-            ))}
+            <Pagination
+              totalUsers={totalUsers}
+              usersCountOnPage={usersCountOnPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         </WrapperPagination>
       </MainWrapper>
@@ -127,4 +119,4 @@ class FindUsers extends React.Component {
   }
 }
 
-export default FindUsers;
+export default React.memo(FindUsers);

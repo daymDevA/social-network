@@ -13,7 +13,7 @@ import {
   getDataUsersCountOnPage,
   getDataIsPrelouder,
 } from "../../redux/reducerUsersFind";
-import Preloader from "../common/preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import { compose } from "redux";
 import withAuthReducer from "../../hoc/withAuthReducer";
 
@@ -41,9 +41,9 @@ export class FindUsersAPI extends React.Component {
           setInFollowingProcess={this.props.setInFollowingProcess}
           currentPage={this.props.currentPage}
           getOutInFollowingProcess={this.props.getOutInFollowingProcess}
-          setCurrentPage={this.setCurrentPage}
+          setCurrentPage={this.setCurrentPage.bind(this)}
           inFollowingProcess={this.props.inFollowingProcess}
-          usersCountOnPage={this.props.users}
+          usersCountOnPage={this.props.usersCountOnPage}
           usersData={this.props.usersData}
         />
       </>
