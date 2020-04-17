@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter, withRouter, Redirect } from "react-router-dom";
 
 import HeaderContainer from "../src/components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
@@ -10,28 +10,57 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import FindUsersContainer from "./components/FindUsers/FindUsersContainer";
 import Profile from "./components/Profile/Profile";
 import LogIn from "./components/LogIn/LogIn";
+import { initializatedApp } from "./redux/reducerApp";
 
 import "./App.css";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { setUserData } from "./redux/reducerAuth";
+import Preloader from "./components/common/preloader/Preloader";
+import ProfileAPIContainer from "./components/Profile/ProfileAPIContainer";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div className="main-wrapper">
-        <HeaderContainer />
-        <Navbar />
-        <div className="main_content">
-          <Route path="/profile/:userId?" render={() => <Profile />} />
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
-          <Route path="/music" render={() => <Music />} />
-          <Route path="/news" render={() => <News />} />
-          <Route path="/settings" render={() => <Settings />} />
-          <Route path="/friends" render={() => {}} />
-          <Route path="/find_users" render={() => <FindUsersContainer />} />
-          <Route path="/login" render={() => <LogIn />} />
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializatedApp();
+  }
+
+  render() {
+    if (!this.props.initializatedAppSuccessful) return <Preloader />;
+    if (
+      this.props.initializatedAppSuccessful &&
+      this.props.location.pathname === "/login"
+    )
+      return <Redirect to={"/profile"} />;
+
+    return (
+      <BrowserRouter>
+        <div className="main-wrapper">
+          <HeaderContainer />
+          <Navbar />
+          <div className="main_content">
+            <Route path="/profile/:userId?" component={Profile} />
+            <Route path="/dialogs" component={DialogsContainer} />
+            <Route path="/music" component={Music} />
+            <Route path="/news" component={News} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/friends" component={ProfileAPIContainer} />
+            <Route path="/find_users" component={FindUsersContainer} />
+            <Route path="/login" component={LogIn} />
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    initializatedAppSuccessful: state.app.initializatedAppSuccessful,
+    isAuth: state.auth.isAuth,
+  };
+};
+
+export default compose(
+  connect(mapStateToProps, { initializatedApp, setUserData }),
+  withRouter
+)(App);

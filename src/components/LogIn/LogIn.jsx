@@ -6,36 +6,43 @@ import {
   FormLogin,
   WrappperTitle,
   WrapperButton,
-  Wrapper,
   WrapperCheckbox,
 } from "./StyledLogIn";
 import { Button } from "../Profile/EditModeProfileInfo/StyledEditModeProfileInfo";
+import { logIn } from "../../redux/reducerAuth";
+import { connect } from "react-redux";
+import { Errors } from "../common/validation/Erros";
+import { Redirect } from "react-router-dom";
 
 const LoginForm = (props) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, reset } = props;
   return (
-    <FormLogin onSubmit={handleSubmit}>
+    <FormLogin
+      onSubmit={() => {
+        handleSubmit();
+        reset();
+      }}
+    >
       <WrappperTitle>
         <Title>Log In</Title>
       </WrappperTitle>
-      <Wrapper>
-        <Field
-          name="login"
-          component="input"
-          type="text"
-          placeholder="Login.."
-        ></Field>
-      </Wrapper>
-      <Wrapper>
-        <Field
-          name="password"
-          component="input"
-          type="text"
-          placeholder="Password.."
-        ></Field>
-      </Wrapper>
+
+      <Field
+        name="login"
+        component={Errors}
+        type="text"
+        placeholder="Login.."
+      ></Field>
+
+      <Field
+        name="password"
+        component={Errors}
+        type="password"
+        placeholder="Password.."
+      ></Field>
+
       <WrapperCheckbox>
-        <Field name="submit" component="input" type="checkbox" />{" "}
+        <Field name="rememberMe" component="input" type="checkbox" />{" "}
         <span>Remember me</span>
       </WrapperCheckbox>
       <WrapperButton>
@@ -47,16 +54,30 @@ const LoginForm = (props) => {
 
 const ContactForm = reduxForm({ form: "login" })(LoginForm);
 
-const LogIn = () => {
+const LogIn = (props) => {
   const onSubmit = (formData) => {
-    console.log(formData);
+    props.logIn(formData.login, formData.password, formData.rememberMe);
+
+    // promise.then((response) => {
+    //   if (this.props.isAuth) {
+    //     this.props.history.push("/profile");
+    //   }
+    // });
   };
 
   return (
-    <WrapperLogIn>
-      <ContactForm onSubmit={onSubmit} />
-    </WrapperLogIn>
+    <>
+      <WrapperLogIn>
+        <ContactForm onSubmit={onSubmit} />
+      </WrapperLogIn>
+    </>
   );
 };
 
-export default LogIn;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+    state: state,
+  };
+};
+export default connect(mapStateToProps, { logIn })(LogIn);

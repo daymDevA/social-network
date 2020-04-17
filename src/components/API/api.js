@@ -52,6 +52,17 @@ export const unFollowUser = (id) => {
   });
 };
 
-export const LogIn = (fromData) => {
-  return instance.post("auth/login");
+export const logIn = (email, password, rememberMe) => {
+  console.log("logIn");
+  return instance
+    .post("auth/login", { email, password, rememberMe })
+    .then((response) => {
+      return response;
+    });
+};
+
+export const logOut = () => {
+  return instance.delete("auth/login").then((response) => {
+    return response;
+  });
 };

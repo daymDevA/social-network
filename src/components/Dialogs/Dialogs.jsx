@@ -5,7 +5,6 @@ import Messages from "./Messages/Messages";
 import {
   WrapperDialogSection,
   WrapperChatsSection,
-  Textarea,
   Button,
   WrapperPost,
 } from "./StyledDialog";

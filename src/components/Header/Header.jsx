@@ -3,7 +3,7 @@ import classes from "./Header.module.css";
 import { NavLink } from "react-router-dom";
 import men from "../../assets/images/men.jpg";
 
-const Header = ({ login, isAuth, avatar }) => {
+const Header = ({ logOut, login, isAuth, avatar }) => {
   return (
     <header className={classes.header}>
       <img
@@ -12,15 +12,24 @@ const Header = ({ login, isAuth, avatar }) => {
       />
 
       {isAuth ? (
-        <div className={classes.section_auth}>
-          <div className={classes.login}>{login}</div>
-          <div
-            className={classes.user_avatar}
-            style={{
-              backgroundImage: `url(${avatar !== null ? avatar : men})`,
-            }}
-          ></div>
-        </div>
+        <>
+          <div className={classes.section_auth}>
+            <NavLink to={"/login"}>
+              <div onClick={logOut} className={classes.login}>
+                Log Out
+              </div>
+            </NavLink>
+          </div>
+          <div className={classes.section_auth}>
+            <div className={classes.login}>{login}</div>
+            <div
+              className={classes.user_avatar}
+              style={{
+                backgroundImage: `url(${avatar !== null ? avatar : men})`,
+              }}
+            ></div>
+          </div>
+        </>
       ) : (
         <div className={classes.section_auth}>
           <NavLink to={"/login"}>

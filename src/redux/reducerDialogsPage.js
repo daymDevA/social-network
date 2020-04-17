@@ -137,4 +137,16 @@ export const addMessageActionCreater = (typeMessage, newMessageText) => ({
   newMessageText,
 });
 
+export const getChatData = (state) => {
+  return state.dialogsPage.chatData;
+};
+
+export const getDiadlogData = (state) => {
+  return state.dialogsPage.diadlogData;
+};
+
+export const getDatanewMessageText = (state) => {
+  return state.dialogsPage.newMessageText;
+};
+
 export default reducerDialogsPage;

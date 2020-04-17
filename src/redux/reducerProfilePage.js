@@ -1,7 +1,6 @@
 import * as api from "../components/API/api";
 
 const ADD_POST = "ADD_POST";
-const UPDATE_TEXT_POST = "UPDATE_TEXT_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const USER_ID = "USER_ID";
 const SET_STATUS = "SET_STATUS";
@@ -39,7 +38,7 @@ const initialState = {
       countDisLikes: 3,
     },
   ],
-  newPostText: "",
+
   userProfile: {
     aboutMe: null,
     contacts: {
@@ -84,7 +83,6 @@ const reducerProfilePage = (state = initialState, action) => {
           },
           ...state.postData,
         ],
-        newPostText: "",
       };
 
     case SET_USER_PROFILE:
@@ -142,6 +140,22 @@ export const setUserID = (userId) => {
     type: "USER_ID",
     userId,
   };
+};
+
+export const getDataUserProfile = (state) => {
+  return state.profilePage.userProfile;
+};
+
+export const getDataStatus = (state) => {
+  return state.profilePage.status;
+};
+
+export const getDataUserProfilePhotoSmall = (state) => {
+  return state.profilePage.userProfile.photos.small;
+};
+
+export const getDataUserProfilePhotoLarge = (state) => {
+  return state.profilePage.userProfile.photos.large;
 };
 
 export default reducerProfilePage;

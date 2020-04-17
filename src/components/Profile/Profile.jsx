@@ -1,11 +1,11 @@
 import React from "react";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import ProfileAPIConteiner from "../Profile/ProfileAPIConteiner";
+import ProfileAPIContainer from "../Profile/ProfileAPIContainer";
 import { Box } from "./StyledProfile";
 const Profile = () => {
   return (
     <Box>
-      <ProfileAPIConteiner />
+      <ProfileAPIContainer />
       <MyPostsContainer />
     </Box>
   );

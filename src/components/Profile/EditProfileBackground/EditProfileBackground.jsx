@@ -11,7 +11,11 @@ import {
 } from "../EditModeProfileInfo/StyledEditModeProfileInfo";
 import picture from "../../../assets/images/picture.jpg";
 import { BackgroundUser } from "../ProfileInfo/StyledProfileInfo";
-const EditProfileBackground = ({ save }) => {
+const EditProfileBackground = ({
+  save,
+  setIsClickedBackgrundEditButton,
+  isClickedBackgrundEditButton,
+}) => {
   return (
     <div>
       <BackgroundUser
@@ -19,12 +23,16 @@ const EditProfileBackground = ({ save }) => {
           backgroundImage: `url(${picture})`,
         }}
       >
-        <BackgroundWrapperEditPencil>
+        <BackgroundWrapperEditPencil
+          onClick={() => setIsClickedBackgrundEditButton(false)}
+        >
           <FontAwesomeIcon icon={faPencilAlt} />
         </BackgroundWrapperEditPencil>
       </BackgroundUser>
       <WrapperBackgroundSaveButton>
-        <BackgroundSaveButton onClick={save}>Save</BackgroundSaveButton>
+        <BackgroundSaveButton onClick={() => save(false)}>
+          Save
+        </BackgroundSaveButton>
       </WrapperBackgroundSaveButton>
     </div>
   );

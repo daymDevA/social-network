@@ -18,6 +18,10 @@ header > img {
   flex-direction: row;
 }
 
+.section_auth > a {
+  text-decoration: none;
+}
+
 .user_avatar {
   width: 35px;
   height: 35px;
@@ -31,4 +35,5 @@ header > img {
   align-self: center;
   margin-right: 10px;
   color: white;
+  text-decoration: none;
 }

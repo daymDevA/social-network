@@ -182,7 +182,7 @@ const EditModeProfileInfo = ({
             />
           </WrapperContacts>
           <WrapperButtons>
-            <SaveButton onClick={save}>Save</SaveButton>
+            <SaveButton onClick={() => save(false)}>Save</SaveButton>
           </WrapperButtons>
         </InfoBlock>
       </WrapperUserInfo>

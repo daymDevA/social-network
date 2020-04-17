@@ -21,9 +21,7 @@ const MyPosts = ({ addPost, postsData }) => {
   return (
     <WrapperPost>
       <label>My posts</label>
-      <FormNewPost
-        onSubmit={(formData) => addPost(formData.newPostMessage)}
-      />{" "}
+      <FormNewPost onSubmit={(formData) => addPost(formData.newPostMessage)} />
       {postsData.map((post) => (
         <Post
           key={post.id}

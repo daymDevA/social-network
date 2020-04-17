@@ -1,14 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setUserAuthData, setUserData } from "../../redux/authReducer";
-import { setUserProfile } from "../../redux/reducerProfilePage";
+import {
+  setUserAuthData,
+  logOut,
+  setUserData,
+  getDataUserId,
+  getDataLogin,
+  getDataIsAuth,
+} from "../../redux/reducerAuth";
+import {
+  setUserProfile,
+  getDataUserProfilePhotoLarge,
+  getDataUserProfilePhotoSmall,
+} from "../../redux/reducerProfilePage";
 import Header from "./Header";
 
 class HeaderContainer extends React.Component {
-  componentDidMount() {
-    this.props.setUserData(this.props.id);
-  }
-
   render() {
     return <Header {...this.props} />;
   }
@@ -16,16 +23,17 @@ class HeaderContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    login: state.auth.login,
-    isAuth: state.auth.isAuth,
-    avatar: state.profilePage.userProfile.photos.small,
-    backgroundLarge: state.profilePage.userProfile.photos.large,
-    id: state.auth.id,
+    login: getDataLogin(state),
+    isAuth: getDataIsAuth(state),
+    avatar: getDataUserProfilePhotoSmall(state),
+    backgroundLarge: getDataUserProfilePhotoLarge(state),
+    id: getDataUserId(state),
   };
 };
 
 export default connect(mapStateToProps, {
   setUserAuthData,
   setUserProfile,
+  logOut,
   setUserData,
 })(HeaderContainer);

@@ -150,4 +150,28 @@ export const toggleFollowing = (id, typeFollowing) => (dispatch) => {
   }
 };
 
+export const getDataUser = (state) => {
+  return state.users.usersData;
+};
+
+export const getDataIsPrelouder = (state) => {
+  return state.users.isPreloader;
+};
+
+export const getDataTotalUsers = (state) => {
+  return state.users.totalUsers;
+};
+
+export const getDataCurrentPage = (state) => {
+  return state.users.currentPage;
+};
+
+export const getDataInFollowingProgress = (state) => {
+  return state.users.inFollowingProcess;
+};
+
+export const getDataUsersCountOnPage = (state) => {
+  return state.users.usersCountOnPage;
+};
+
 export default reducerUsersFind;

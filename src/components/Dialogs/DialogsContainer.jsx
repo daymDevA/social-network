@@ -1,15 +1,20 @@
 import Dialogs from "./Dialogs";
-import { addMessageActionCreater } from "../../redux/reducerDialogsPage";
+import {
+  addMessageActionCreater,
+  getChatData,
+  getDiadlogData,
+  getDatanewMessageText,
+} from "../../redux/reducerDialogsPage";
 
 import { connect } from "react-redux";
-import withAuthReducer from "../../hoc/WithAuthReducer";
+import withAuthReducer from "../../hoc/withAuthReducer";
 import { compose } from "redux";
 
 const mapStateToProps = (state) => {
   return {
-    chatData: state.dialogsPage.chatData,
-    diadlogData: state.dialogsPage.diadlogData,
-    newMessageText: state.dialogsPage.newMessageText,
+    chatData: getChatData(state),
+    diadlogData: getDiadlogData(state),
+    newMessageText: getDatanewMessageText(state),
   };
 };
 

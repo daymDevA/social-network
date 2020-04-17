@@ -21,11 +21,11 @@ import {
 
 class ProfileInfo extends React.Component {
   state = {
-    editModuleBackg: false,
-    editModule: false,
-    onClickBackgroundPen: false,
+    isShowBackgroundPen: false,
+    isShowInfoBlock: false,
+    isClickBackgroundPen: false,
     status: "",
-    onClickInfoBlockPen: false,
+    isClickInfoBlockPen: false,
   };
 
   changeTextStatus(value) {
@@ -33,41 +33,41 @@ class ProfileInfo extends React.Component {
   }
 
   onHover() {
-    this.state.editModuleBackg
-      ? this.setState({ editModuleBackg: false })
-      : this.setState({ editModuleBackg: true });
+    this.state.isShowBackgroundPen
+      ? this.setState({ isShowBackgroundPen: false })
+      : this.setState({ isShowBackgroundPen: true });
   }
 
   onHoverInfoBlock() {
-    this.state.editModule
-      ? this.setState({ editModule: false })
-      : this.setState({ editModule: true });
+    this.state.isShowInfoBlock
+      ? this.setState({ isShowInfoBlock: false })
+      : this.setState({ isShowInfoBlock: true });
   }
 
   onClickBcgPen() {
-    if (!this.state.onClickBackgroundPen) {
-      this.setState({ onClickBackgroundPen: true });
+    if (!this.state.isClickBackgroundPen) {
+      this.setState({ isClickBackgroundPen: true });
     } else {
-      this.setState({ onClickBackgroundPen: false });
-      this.setState({ editModuleBackg: false });
+      this.setState({ isClickBackgroundPen: false });
+      this.setState({ isShowBackgroundPen: false });
     }
   }
 
   saveNewBackgroundImg() {
-    this.setState({ onClickInfoBlockPen: false });
+    this.setState({ isClickBackgroundPen: false });
   }
 
   saveInfo() {
     this.props.updateStatus(this.props.userProfile.userId, this.state.status);
-    this.setState({ onClickInfoBlockPen: false });
-    this.setState({ editModule: false });
+    this.setState({ isClickInfoBlockPen: false });
+    this.setState({ isShowInfoBlock: false });
   }
 
   onClickInfoBlockPen() {
-    if (this.state.onClickInfoBlockPen) {
-      this.setState({ onClickInfoBlockPen: false });
+    if (this.state.isClickInfoBlockPen) {
+      this.setState({ isClickInfoBlockPen: false });
     } else {
-      this.setState({ onClickInfoBlockPen: true });
+      this.setState({ isClickInfoBlockPen: true });
     }
   }
 
@@ -82,7 +82,7 @@ class ProfileInfo extends React.Component {
 
     return (
       <>
-        {this.state.onClickBackgroundPen ? (
+        {this.state.isClickBackgroundPen ? (
           <EditProfileBackground save={this.onClickBcgPen.bind(this)} />
         ) : (
           <BackgroundUser
@@ -96,7 +96,7 @@ class ProfileInfo extends React.Component {
               })`,
             }}
           >
-            {this.state.editModuleBackg ? (
+            {this.state.isShowBackgroundPen ? (
               <BackgroundWrapperEditPencil
                 onClick={this.onClickBcgPen.bind(this)}
               >
@@ -107,7 +107,7 @@ class ProfileInfo extends React.Component {
             )}
           </BackgroundUser>
         )}
-        {this.state.onClickInfoBlockPen ? (
+        {this.state.isClickInfoBlockPen ? (
           <EditModeProfileInfo
             save={this.saveInfo.bind(this)}
             status={this.state.status}
@@ -162,7 +162,7 @@ class ProfileInfo extends React.Component {
                   MainLink: {userProfile.contacts.mainLink}
                 </label>
               </WrapperContacts>
-              {this.state.editModule ? (
+              {this.state.isShowInfoBlock ? (
                 <WrapperButtons>
                   <InfoBlockWrapperEditPencil
                     onClick={this.onClickInfoBlockPen.bind(this)}

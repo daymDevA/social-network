@@ -6,10 +6,16 @@ import {
   getUsers,
   setInFollowingProcess,
   toggleFollowing,
+  getDataCurrentPage,
+  getDataUser,
+  getDataInFollowingProgress,
+  getDataTotalUsers,
+  getDataUsersCountOnPage,
+  getDataIsPrelouder,
 } from "../../redux/reducerUsersFind";
 import Preloader from "../common/preloader/Preloader";
 import { compose } from "redux";
-import withAuthReducer from "../../hoc/WithAuthReducer";
+import withAuthReducer from "../../hoc/withAuthReducer";
 
 export class FindUsersAPI extends React.Component {
   constructor(props) {
@@ -47,12 +53,12 @@ export class FindUsersAPI extends React.Component {
 
 const mapStatetoProps = (state) => {
   return {
-    usersData: state.users.usersData,
-    isPreloader: state.users.isPreloader,
-    totalUsers: state.users.totalUsers,
-    currentPage: state.users.currentPage,
-    inFollowingProcess: state.users.inFollowingProcess,
-    usersCountOnPage: state.users.usersCountOnPage,
+    usersData: getDataUser(state),
+    isPreloader: getDataIsPrelouder(state),
+    totalUsers: getDataTotalUsers(state),
+    currentPage: getDataCurrentPage(state),
+    inFollowingProcess: getDataInFollowingProgress(state),
+    usersCountOnPage: getDataUsersCountOnPage(state),
   };
 };
 

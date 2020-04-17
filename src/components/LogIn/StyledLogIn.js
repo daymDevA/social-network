@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const WrapperLogIn = styled.div`
   display: flex;
@@ -33,24 +33,6 @@ export const FormLogin = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-export const Wrapper = styled.div`
-  input {
-    display: block;
-    top: 0;
-    margin-bottom: 10px;
-    border: none;
-    border: 1px solid #d7d7db;
-    box-sizing: border-box;
-    height: 35px;
-    padding-left: 20px;
-    border-radius: 10px;
-    width: 100%;
-    color: #6b6b6b;
-    position: relative;
-    margin-bottom: 20px;
-  }
 `;
 
 export const WrapperButton = styled.div`
