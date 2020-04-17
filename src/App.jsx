@@ -23,7 +23,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.initializatedApp();
   }
-
+  // dev
   render() {
     if (!this.props.initializatedAppSuccessful) return <Preloader />;
     if (
