@@ -1,30 +1,23 @@
 import React from "react";
-
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { withRouter } from "react-router-dom";
-
 import ProfileInfoHook from "./ProfileInfo/ProfileInfoHook";
-import withAuthReducer from "../../hoc/withAuthReducer";
 
 import {
   setUserProfile,
   getUserStatus,
-  getDataStatus,
-  getDataUserProfile,
+  updateUserProfile,
   updateStatus,
 } from "../../redux/reducerProfilePage";
-import { getProfile, getDataUserId } from "../../redux/reducerAuth";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { getProfile } from "../../redux/authReducer";
+import withAuthReducer from "../../hoc/withAuthReducer";
+import { compose } from "redux";
 
-class ProfileAPIContainer extends React.Component {
+class ProfileAPIConteiner extends React.Component {
   componentDidMount() {
     let userId = this.props.match.params.userId;
-    if (!userId) {
-      userId = this.props.id;
-
-      if (!userId) {
-        this.props.history.push("/login");
-      }
+    if (userId === undefined) {
+      userId = 6771;
     }
 
     this.props.getProfile(userId);
@@ -37,6 +30,7 @@ class ProfileAPIContainer extends React.Component {
         userProfile={this.props.userProfile}
         userId={this.props.userId}
         status={this.props.status}
+        updateUserProfile={this.props.updateUserProfile}
         updateStatus={this.props.updateStatus}
       />
     );
@@ -45,9 +39,8 @@ class ProfileAPIContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userProfile: getDataUserProfile(state),
-    id: getDataUserId(state),
-    status: getDataStatus(state),
+    userProfile: state.profilePage.userProfile,
+    status: state.profilePage.status,
   };
 };
 
@@ -57,7 +50,8 @@ export default compose(
     getProfile,
     getUserStatus,
     updateStatus,
+    updateUserProfile,
   }),
   withAuthReducer,
   withRouter
-)(ProfileAPIContainer);
+)(ProfileAPIConteiner);

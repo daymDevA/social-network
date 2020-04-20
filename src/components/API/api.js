@@ -34,6 +34,18 @@ export const getUserProfile = (id) => {
   });
 };
 
+export const updateUserProfile = (profile) => {
+  return instance.put(`profile`, { ...profile }).then((response) => {
+    return response.data;
+  });
+};
+
+export const updateUserPhoto = (photo) => {
+  return instance.put(`profile/photo`, { photo }).then((response) => {
+    return response.data;
+  });
+};
+
 export const getAuthData = () => {
   return instance.get(`auth/me`).then((response) => {
     return response.data;
@@ -53,7 +65,6 @@ export const unFollowUser = (id) => {
 };
 
 export const logIn = (email, password, rememberMe) => {
-  console.log("logIn");
   return instance
     .post("auth/login", { email, password, rememberMe })
     .then((response) => {

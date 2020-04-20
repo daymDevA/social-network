@@ -36,7 +36,7 @@ const User = ({ user, InFollowingProcess, toggleFollowing }) => {
           <Button
             disabled={InFollowingProcess}
             onClick={() => {
-              this.props.toggleFollowing(user.id, "unfollow");
+              toggleFollowing(user.id, "follow");
             }}
           >
             unFollowed

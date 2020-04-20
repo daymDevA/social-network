@@ -8,19 +8,22 @@ import {
   WrapperButton,
   WrapperCheckbox,
 } from "./StyledLogIn";
-import { Button } from "../Profile/EditModeProfileInfo/StyledEditModeProfileInfo";
+import { Button } from "../Profile/EditModeProfileInfo/StyledFormProfileInfo";
 import { logIn } from "../../redux/reducerAuth";
 import { connect } from "react-redux";
-import { Errors } from "../common/validation/Erros";
+import { requiredField, maxLengthCreator } from "../util/Validation/Validation";
+
 import { Redirect } from "react-router-dom";
+import CustomField from "../common/CustomField/CustomField";
 
 const LoginForm = (props) => {
   const { handleSubmit, reset } = props;
+
   return (
     <FormLogin
       onSubmit={() => {
         handleSubmit();
-        reset();
+        // reset();
       }}
     >
       <WrappperTitle>
@@ -29,14 +32,16 @@ const LoginForm = (props) => {
 
       <Field
         name="login"
-        component={Errors}
+        component={CustomField}
+        validate={[requiredField]}
         type="text"
         placeholder="Login.."
       ></Field>
 
       <Field
         name="password"
-        component={Errors}
+        component={CustomField}
+        validate={[requiredField]}
         type="password"
         placeholder="Password.."
       ></Field>

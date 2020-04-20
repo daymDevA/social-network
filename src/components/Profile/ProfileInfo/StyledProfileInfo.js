@@ -18,22 +18,9 @@ export const WrapperUserInfo = styled.section`
   grid-gap: 20px;
 `;
 
-export const Avatar = styled.div`
-  display: inline-block;
-  height: 180px;
-  display: flex;
-  flex-direction: row;
-  border: 1px solid #d7d7db;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-  border-radius: 15px;
-`;
-
 export const InfoBlock = styled.div`
   display: grid;
-  grid-template-columns: minmax(150px, 260px) minmax(150px, 260px) 100px;
+  grid-template-columns: minmax(150px, 300px) minmax(150px, 300px) 180px;
   grid-gap: 2vw;
 `;
 

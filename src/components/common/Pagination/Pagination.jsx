@@ -59,7 +59,13 @@ const Pagination = ({
           >
             1
           </StyledButtonPage>
-          <StyledButtonPage>...</StyledButtonPage>
+          <StyledButtonPage
+            onClick={() => {
+              nextPage("left");
+            }}
+          >
+            ...
+          </StyledButtonPage>
         </>
       ) : (
         ""
@@ -80,7 +86,13 @@ const Pagination = ({
         ))}
       {groupPages < totalGroup ? (
         <>
-          <StyledButtonPage>...</StyledButtonPage>
+          <StyledButtonPage
+            onClick={() => {
+              nextPage("right");
+            }}
+          >
+            ...
+          </StyledButtonPage>
           <StyledButtonPage
             onClick={() => {
               setCurrentPage(totalPages);

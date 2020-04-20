@@ -96,7 +96,6 @@ const reducerProfilePage = (state = initialState, action) => {
         ...state,
         userId: action.userId,
       };
-
     default:
       return { ...state };
   }
@@ -113,6 +112,12 @@ export const updateStatus = (id, status) => (dispatch) => {
     if (response.data.resultCode === 0) {
       dispatch(getUserStatus(id));
     }
+  });
+};
+
+export const updateUserProfile = (profile) => (dispatch) => {
+  api.updateUserProfile(profile).then((response) => {
+    dispatch(setUserProfile(profile));
   });
 };
 

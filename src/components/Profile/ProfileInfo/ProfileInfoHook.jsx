@@ -4,22 +4,27 @@ import men from "../../../assets/images/men.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import EditProfileBackground from "../EditProfileBackground/EditProfileBackground";
-import EditModeProfileInfo from "../EditModeProfileInfo/EditModeProfileInfo";
 import {
   BackgroundWrapperEditPencil,
   WrapperButtons,
   InfoBlockWrapperEditPencil,
-} from "../EditModeProfileInfo/StyledEditModeProfileInfo";
+} from "../EditModeProfileInfo/StyledFormProfileInfo";
 import {
   BackgroundUser,
   Info,
   InfoBlock,
   WrapperUserInfo,
-  Avatar,
   WrapperContacts,
 } from "./StyledProfileInfo";
+import FormProfileInfo from "../EditModeProfileInfo/FormProfileInfo";
+import { Avatar } from "../../../styles";
 
-const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
+const ProfileInfoHook = ({
+  userProfile,
+  userStatus,
+  updateStatus,
+  updateUserProfile,
+}) => {
   const [isShowBackgroundEditButton, setIsShowBackgroundEditButton] = useState(
     false
   );
@@ -51,17 +56,18 @@ const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
     setStatus(value);
   };
 
-  const saveChangedByInfoBlock = () => {
-    updateStatus(userProfile.userId, status);
-    setIsClickedInfoBlockEditButton(true);
+  const saveChangedInfoBlock = (profile, flag) => {
+    // updateStatus(userProfile.userId, status);
+    setIsClickedInfoBlockEditButton(flag);
+    // updateUserProfile(profile);
   };
 
   return (
     <>
       {isClickedBackgroundEditButton ? (
         <EditProfileBackground
-          isClickedBackgrundEditButton={isClickedBackgroundEditButton}
-          save={setIsClickedBackgroundEditButton}
+          setIsClickedBackgroundEditButton={setIsClickedBackgroundEditButton}
+          // save={setIsClickedBackgroundEditButton}
         />
       ) : (
         <BackgroundUser
@@ -91,8 +97,8 @@ const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
         </BackgroundUser>
       )}
       {isClickedInfoBlockEditButton ? (
-        <EditModeProfileInfo
-          save={setIsClickedInfoBlockEditButton}
+        <FormProfileInfo
+          save={saveChangedInfoBlock}
           userProfile={userProfile}
           changeTextStatus={changeTextStatus}
         />
@@ -140,7 +146,9 @@ const ProfileInfoHook = ({ userProfile, userStatus, updateStatus }) => {
             </WrapperContacts>
             {isShowInfoBlockEditButton ? (
               <WrapperButtons>
-                <InfoBlockWrapperEditPencil onClick={saveChangedByInfoBlock}>
+                <InfoBlockWrapperEditPencil
+                  onClick={setIsClickedInfoBlockEditButton}
+                >
                   <FontAwesomeIcon icon={faPencilAlt} />
                 </InfoBlockWrapperEditPencil>
               </WrapperButtons>

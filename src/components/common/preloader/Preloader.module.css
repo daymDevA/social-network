@@ -1,8 +1,10 @@
 .preloader {
   background: rgba(111, 156, 234, 0.562);
   position: absolute;
-  width: 985px;
-  height: calc(100vh - 80px);
+  min-width: 985px;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  height: 100%;
   display: flex;
   flex-direction: row;
 }

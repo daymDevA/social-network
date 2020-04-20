@@ -25,8 +25,8 @@ const mapStateToProps = (state) => {
   return {
     login: getDataLogin(state),
     isAuth: getDataIsAuth(state),
-    avatar: getDataUserProfilePhotoSmall(state),
-    backgroundLarge: getDataUserProfilePhotoLarge(state),
+    avatar: getDataUserProfilePhotoSmall(state) || "",
+    backgroundLarge: getDataUserProfilePhotoLarge(state) || "",
     id: getDataUserId(state),
   };
 };
