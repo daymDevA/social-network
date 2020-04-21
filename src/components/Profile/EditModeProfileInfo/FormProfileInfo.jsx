@@ -21,55 +21,40 @@ import {
   WrapperContacts,
 } from "../ProfileInfo/StyledProfileInfo";
 import CustomField from "../../common/CustomField/CustomField";
-import { reduxForm, Field } from "redux-form";
+import {
+  Field,
+  Form,
+  Formik,
+  useFormik,
+  FormikProps,
+  useFormikContext,
+} from "formik";
 
-const setProfile = (formData, id) => {
-  return {
-    aboutMe: formData.aboutMe,
-    contacts: {
-      skype: formData.skype,
-      vk: formData.vk,
-      facebook: formData.facebook,
-      github: formData.github,
-      twitter: formData.twitter,
-      instagram: formData.instagram,
-      mainLink: formData.mainLink,
-      youtube: formData.youtube,
-    },
-    lookingForAJob: formData.lookingForAJob,
-    lookingForAJobDescription: formData.lookingForAJobDescription,
-    fullName: formData.name,
-    userId: id,
-  };
-};
-
-const EditProfileInfo = ({
-  save,
-  status,
-  userProfile,
-  changeTextStatus,
-  handleSubmit,
-}) => {
-  const infoBlockFields = [
+const setInfoUser = (userProfile) => {
+  return [
     {
-      name: "name",
+      name: "fullName",
       value: userProfile.fullName,
       placeholder: "Name..",
+      type: "text",
     },
     {
       name: "status",
-      value: "status",
+      value: userProfile.status,
       placeholder: "Status..",
+      type: "text",
     },
     {
       name: "aboutMe",
       value: userProfile.aboutMe,
       placeholder: "About Me..",
+      type: "text",
     },
     {
       name: "lookingForAJob",
       value: userProfile.lookingForAJob,
       placeholder: "Looking for a job..",
+      type: "checkbox",
     },
     {
       name: "lookingForAJobDescription",
@@ -77,90 +62,148 @@ const EditProfileInfo = ({
       placeholder: "Looking for a job description..",
     },
   ];
-
-  console.log(infoBlockFields);
-
-  return (
-    <form
-      onSubmit={() => {
-        handleSubmit();
-      }}
-    >
-      <WrapperUserInfo>
-        <Avatar
-          htmlFor="file-upload"
-          style={{
-            backgroundImage: `url(${
-              userProfile.photos.small !== null ? userProfile.photos.small : ""
-            })`,
-          }}
-        >
-          <div>
-            <FontAwesomeIcon icon={faCloudUploadAlt} />
-          </div>
-          <UploaderFile
-            type="file"
-            id="file-upload"
-            name="avatar"
-            accept="image/png, image/jpeg"
-          />
-        </Avatar>
-        <AvatarWrapperEditPencil>
-          <FontAwesomeIcon icon={faPencilAlt} />
-        </AvatarWrapperEditPencil>
-
-        <InfoBlock>
-          <Info>
-            {infoBlockFields.map((item, index) => (
-              <Field
-                key={index}
-                name={item.name}
-                changeTextStatus={item.name === status ? changeTextStatus : ""}
-                component={CustomField}
-                value={"item.value"}
-                placeholder={item.placeholder}
-              />
-            ))}
-          </Info>
-
-          <WrapperContacts>
-            {Object.keys(userProfile.contacts).map((item, index) => (
-              <Field
-                key={item}
-                name={item}
-                component={CustomField}
-                placeholder={`${item}..`}
-                value={userProfile.contacts[item]}
-              />
-            ))}
-          </WrapperContacts>
-
-          <WrapperButtons>
-            <SaveButton>Save</SaveButton>
-            <SaveButton>Cancel</SaveButton>
-          </WrapperButtons>
-        </InfoBlock>
-      </WrapperUserInfo>
-    </form>
-  );
 };
 
-const EditFormProfileInfo = reduxForm({ form: "EditProfileInfo" })(
-  EditProfileInfo
-);
+const setInfoUserContacts = (contacts) => {
+  return [
+    {
+      name: "youtube",
+      value: contacts.youtube,
+      placeholder: "YouTube..",
+    },
+    {
+      name: "vk",
+      value: contacts.vk,
+      placeholder: "VK..",
+    },
+    {
+      name: "twitter",
+      value: contacts.twitter,
+      placeholder: "Twitter..",
+    },
+    {
+      name: "website",
+      value: contacts.website,
+      placeholder: "Web Side...",
+    },
+    {
+      name: "instagram",
+      value: contacts.instagram,
+      placeholder: "Instagram...",
+    },
+    {
+      name: "github",
+      value: contacts.github,
+      placeholder: "Github..",
+    },
+    {
+      name: "mainLink",
+      value: contacts.mainLink,
+      placeholder: "MainLink..",
+    },
+  ];
+};
 
-const FormProfileInfo = ({ save, status, userProfile, changeTextStatus }) => {
-  const onSubmit = (formData) => {
-    save("", false);
+const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
+  const choosePhoto = (e) => {
+    uploadFile(e.target.files[0]);
   };
-
   return (
-    <EditFormProfileInfo
-      onSubmit={onSubmit}
-      status={status}
-      userProfile={userProfile}
-      changeTextStatus={changeTextStatus}
-    />
+    <Formik
+      initialValues={{
+        aboutMe: userProfile.aboutMe || "",
+        youtube: userProfile.contacts.youtube || "",
+        vk: userProfile.contacts.vk || "",
+        twitter: userProfile.contacts.twitter || "",
+        instagram: userProfile.contacts.instagram || "",
+        website: userProfile.contacts.website || "",
+        github: userProfile.contacts.github || "",
+        mainLink: userProfile.contacts.mainLink || "",
+        lookingForAJob: userProfile.lookingForAJob || "",
+        lookingForAJobDescription: userProfile.lookingForAJobDescription || "",
+        fullName: userProfile.fullName || "",
+        userId: userProfile.userId || "",
+        status: status,
+      }}
+      onSubmit={(values, actions) => {
+        const profile = {
+          ...values,
+          contacts: values,
+          photos: { small: null, large: null },
+        };
+        console.log(profile);
+        save(profile, false);
+      }}
+    >
+      {(props) => {
+        console.log(props);
+        return (
+          <form onSubmit={props.handleSubmit}>
+            <WrapperUserInfo>
+              <Avatar
+                onChange={choosePhoto}
+                htmlFor="file-upload"
+                style={{
+                  backgroundImage: `url(${
+                    userProfile.photos.small !== null
+                      ? userProfile.photos.small
+                      : ""
+                  })`,
+                }}
+              >
+                <div>
+                  <FontAwesomeIcon icon={faCloudUploadAlt} />
+                </div>
+                <UploaderFile
+                  type="file"
+                  id="file-upload"
+                  name="avatar"
+                  accept="image/png, image/jpeg"
+                />
+              </Avatar>
+              <AvatarWrapperEditPencil>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </AvatarWrapperEditPencil>
+
+              <InfoBlock>
+                <Info>
+                  {setInfoUser(props.values).map((item, index) => (
+                    <input
+                      key={index}
+                      name={item.name}
+                      type={item.type}
+                      onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      value={item.value}
+                      placeholder={item.placeholder}
+                    />
+                  ))}
+                </Info>
+
+                <WrapperContacts>
+                  {setInfoUserContacts(props.values).map((item, index) => (
+                    <input
+                      key={index}
+                      name={item.name}
+                      type={item.type}
+                      onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      value={item.value}
+                      placeholder={item.placeholder}
+                    />
+                  ))}
+                </WrapperContacts>
+
+                <WrapperButtons>
+                  <SaveButton type="submit">Save</SaveButton>
+                  <SaveButton>Cancel</SaveButton>
+                </WrapperButtons>
+              </InfoBlock>
+            </WrapperUserInfo>
+          </form>
+        );
+      }}
+    </Formik>
   );
 };
 

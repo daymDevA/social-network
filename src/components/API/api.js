@@ -35,9 +35,11 @@ export const getUserProfile = (id) => {
 };
 
 export const updateUserProfile = (profile) => {
-  return instance.put(`profile`, { ...profile }).then((response) => {
-    return response.data;
-  });
+  return instance
+    .put(`profile`, { ...profile, contacts: profile.contacts })
+    .then((response) => {
+      return response.data;
+    });
 };
 
 export const updateUserPhoto = (photo) => {
@@ -64,9 +66,10 @@ export const unFollowUser = (id) => {
   });
 };
 
-export const logIn = (email, password, rememberMe) => {
+export const logIn = (email, password, rememberMe, captcha) => {
+  console.log(email, password, rememberMe);
   return instance
-    .post("auth/login", { email, password, rememberMe })
+    .post("auth/login", { email, password, rememberMe, captcha })
     .then((response) => {
       return response;
     });
@@ -75,5 +78,19 @@ export const logIn = (email, password, rememberMe) => {
 export const logOut = () => {
   return instance.delete("auth/login").then((response) => {
     return response;
+  });
+};
+
+export const getCaptcha = () => {
+  return instance.get("security/get-captcha-url");
+};
+
+export const uploadFile = (file) => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return instance.put("profile/photo", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { reduxForm, Field } from "redux-form";
 import {
   WrapperLogIn,
@@ -12,12 +12,21 @@ import { Button } from "../Profile/EditModeProfileInfo/StyledFormProfileInfo";
 import { logIn } from "../../redux/reducerAuth";
 import { connect } from "react-redux";
 import { requiredField, maxLengthCreator } from "../util/Validation/Validation";
-
+import { getCaptcha } from "../../redux/reducerProfilePage";
 import { Redirect } from "react-router-dom";
 import CustomField from "../common/CustomField/CustomField";
+import { useState } from "react";
 
 const LoginForm = (props) => {
   const { handleSubmit, reset } = props;
+
+  const [picCaptcha, setPicCaptcha] = useState(props.captcha);
+
+  useEffect(() => {
+    setPicCaptcha(props.captcha);
+  }, [props.captcha]);
+
+  console.log(props.captcha);
 
   return (
     <FormLogin
@@ -32,7 +41,7 @@ const LoginForm = (props) => {
 
       <Field
         name="login"
-        component={CustomField}
+        component="input"
         validate={[requiredField]}
         type="text"
         placeholder="Login.."
@@ -40,16 +49,25 @@ const LoginForm = (props) => {
 
       <Field
         name="password"
-        component={CustomField}
+        component="input"
         validate={[requiredField]}
         type="password"
         placeholder="Password.."
       ></Field>
 
       <WrapperCheckbox>
-        <Field name="rememberMe" component="input" type="checkbox" />{" "}
+        <Field name="rememberMe" component="input" type="checkbox" />
         <span>Remember me</span>
       </WrapperCheckbox>
+      <div>
+        {picCaptcha ? <img src={picCaptcha} alt="" /> : ""}
+        <Field
+          name="captcha"
+          component="input"
+          type="text"
+          placeholder="write symbols.."
+        />
+      </div>
       <WrapperButton>
         <Button type="submit">Log in</Button>
       </WrapperButton>
@@ -59,30 +77,36 @@ const LoginForm = (props) => {
 
 const ContactForm = reduxForm({ form: "login" })(LoginForm);
 
-const LogIn = (props) => {
-  const onSubmit = (formData) => {
-    props.logIn(formData.login, formData.password, formData.rememberMe);
-
-    // promise.then((response) => {
-    //   if (this.props.isAuth) {
-    //     this.props.history.push("/profile");
-    //   }
-    // });
+class LogIn extends React.Component {
+  onSubmit = (formData) => {
+    this.props.logIn(
+      formData.login,
+      formData.password,
+      formData.rememberMe,
+      formData.captcha
+    );
   };
 
-  return (
-    <>
-      <WrapperLogIn>
-        <ContactForm onSubmit={onSubmit} />
-      </WrapperLogIn>
-    </>
-  );
-};
+  componentDidMount() {
+    this.props.getCaptcha();
+  }
+
+  render() {
+    return (
+      <>
+        <WrapperLogIn>
+          <ContactForm onSubmit={this.onSubmit} captcha={this.props.captcha} />
+        </WrapperLogIn>
+      </>
+    );
+  }
+}
 
 const mapStateToProps = (state) => {
+  console.log(state.profilePage);
   return {
     isAuth: state.auth.isAuth,
-    state: state,
+    captcha: state.profilePage.captcha,
   };
 };
-export default connect(mapStateToProps, { logIn })(LogIn);
+export default connect(mapStateToProps, { logIn, getCaptcha })(LogIn);

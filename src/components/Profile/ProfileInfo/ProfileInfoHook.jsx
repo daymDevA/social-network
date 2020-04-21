@@ -21,7 +21,8 @@ import { Avatar } from "../../../styles";
 
 const ProfileInfoHook = ({
   userProfile,
-  userStatus,
+  status,
+  uploadFile,
   updateStatus,
   updateUserProfile,
 }) => {
@@ -30,36 +31,30 @@ const ProfileInfoHook = ({
   );
 
   const [infoProfile, setInfoProfile] = useState(userProfile);
-
   const [
     isClickedBackgroundEditButton,
     setIsClickedBackgroundEditButton,
   ] = useState(false);
-
   const [isShowInfoBlockEditButton, setIsShowInfoBlockEditButton] = useState(
     false
   );
-
   const [
     isClickedInfoBlockEditButton,
     setIsClickedInfoBlockEditButton,
   ] = useState(false);
 
-  const [status, setStatus] = useState(userStatus);
+  const [userStatus, setUserStatus] = useState(status);
 
   useEffect(() => {
-    setStatus(userStatus);
+    setUserStatus(status);
     setInfoProfile(userProfile);
-  }, [userStatus, userProfile]);
-
-  const changeTextStatus = (value) => {
-    setStatus(value);
-  };
+  }, [status, userProfile]);
 
   const saveChangedInfoBlock = (profile, flag) => {
-    // updateStatus(userProfile.userId, status);
+    updateStatus(infoProfile.userId, profile.status);
+    updateUserProfile(profile);
+
     setIsClickedInfoBlockEditButton(flag);
-    // updateUserProfile(profile);
   };
 
   return (
@@ -68,6 +63,7 @@ const ProfileInfoHook = ({
         <EditProfileBackground
           setIsClickedBackgroundEditButton={setIsClickedBackgroundEditButton}
           // save={setIsClickedBackgroundEditButton}
+          uploadFile={uploadFile}
         />
       ) : (
         <BackgroundUser
@@ -75,8 +71,9 @@ const ProfileInfoHook = ({
           onMouseLeave={() => setIsShowBackgroundEditButton(false)}
           style={{
             backgroundImage: `url(${
-              userProfile.photos.large !== null
-                ? userProfile.photos.large
+              infoProfile.photos.large !== null &&
+              infoProfile.photos.large !== ""
+                ? infoProfile.photos.large
                 : backgroundLarge
             })`,
           }}
@@ -100,7 +97,8 @@ const ProfileInfoHook = ({
         <FormProfileInfo
           save={saveChangedInfoBlock}
           userProfile={userProfile}
-          changeTextStatus={changeTextStatus}
+          status={userStatus}
+          uploadFile={uploadFile}
         />
       ) : (
         <WrapperUserInfo
@@ -120,7 +118,7 @@ const ProfileInfoHook = ({
           <InfoBlock>
             <Info>
               <label htmlFor="">Name: {userProfile.fullName}</label>
-              <label htmlFor="">Status: {status}</label>
+              <label htmlFor="">Status: {userStatus}</label>
               <label htmlFor="">About Me: {userProfile.aboutMe}</label>
               <label htmlFor="">
                 Looking for a job: {userProfile.lookingForAJob ? `Yes` : `No`}

@@ -25,6 +25,7 @@ const CallOutSide = (ref, setIsShowDataError) => {
 const CustomField = ({ input, meta, ...props }) => {
   const [isShowDataError, setIsShowDataError] = useState(false);
   const wrapperRef = useRef(null);
+  console.log(input, meta);
   CallOutSide(wrapperRef, setIsShowDataError);
 
   return (
@@ -42,7 +43,7 @@ const CustomField = ({ input, meta, ...props }) => {
           </IconError>
         </>
       ) : (
-        <InputCustom {...input} {...props} gray />
+        <InputCustom gray />
       )}
     </Box>
   );

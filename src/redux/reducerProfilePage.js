@@ -4,6 +4,8 @@ const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const USER_ID = "USER_ID";
 const SET_STATUS = "SET_STATUS";
+const SET_PHOTOS = "SET_PHOTOS";
+const SET_CAPTCHA = "SET_CAPTCHA";
 
 const initialState = {
   postData: [
@@ -62,10 +64,16 @@ const initialState = {
   },
   userId: 6771,
   status: "",
+  captcha: null,
 };
 
 const reducerProfilePage = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CAPTCHA:
+      return {
+        ...state,
+        captcha: action.captcha,
+      };
     case SET_STATUS:
       return {
         ...state,
@@ -96,11 +104,29 @@ const reducerProfilePage = (state = initialState, action) => {
         ...state,
         userId: action.userId,
       };
+    case SET_PHOTOS:
+      return {
+        ...state,
+        photos: action.photos,
+      };
     default:
       return { ...state };
   }
 };
 
+export const setStatus = (status) => {
+  return {
+    type: "SET_STATUS",
+    status,
+  };
+};
+
+export const setCaptcha = (captcha) => {
+  return {
+    type: "SET_CAPTCHA",
+    captcha,
+  };
+};
 export const getUserStatus = (id) => (dispatch) => {
   api.getStatus(id).then((response) => {
     dispatch(setStatus(response.data));
@@ -117,15 +143,28 @@ export const updateStatus = (id, status) => (dispatch) => {
 
 export const updateUserProfile = (profile) => (dispatch) => {
   api.updateUserProfile(profile).then((response) => {
-    dispatch(setUserProfile(profile));
+    if (response.resultCode === 0) {
+      api.getUserProfile(profile.userId).then((response) => {
+        console.log(response);
+
+        dispatch(setUserProfile(profile));
+      });
+    }
   });
 };
 
-export const setStatus = (status) => {
-  return {
-    type: "SET_STATUS",
-    status,
-  };
+export const getCaptcha = () => (dispatch) => {
+  api.getCaptcha().then((response) => {
+    dispatch(setCaptcha(response.data.url));
+  });
+};
+
+export const uploadFile = (file) => (dispatch) => {
+  api.uploadFile(file).then((response) => {
+    if (response.data.resultCode === 0) {
+      dispatch(setPhoto(response.data.photos));
+    }
+  });
 };
 
 export const addPostActionCreater = (newPostText) => ({
@@ -144,6 +183,13 @@ export const setUserID = (userId) => {
   return {
     type: "USER_ID",
     userId,
+  };
+};
+
+export const setPhoto = (photos) => {
+  return {
+    type: "SET_PHOTOS",
+    photos,
   };
 };
 

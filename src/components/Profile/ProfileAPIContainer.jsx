@@ -12,6 +12,7 @@ import { withRouter } from "react-router-dom";
 import { getProfile } from "../../redux/authReducer";
 import withAuthReducer from "../../hoc/withAuthReducer";
 import { compose } from "redux";
+import { uploadFile } from "../../redux/reducerProfilePage";
 
 class ProfileAPIConteiner extends React.Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class ProfileAPIConteiner extends React.Component {
       <ProfileInfoHook
         userProfile={this.props.userProfile}
         userId={this.props.userId}
+        uploadFile={this.props.uploadFile}
         status={this.props.status}
         updateUserProfile={this.props.updateUserProfile}
         updateStatus={this.props.updateStatus}
@@ -50,6 +52,7 @@ export default compose(
     getProfile,
     getUserStatus,
     updateStatus,
+    uploadFile,
     updateUserProfile,
   }),
   withAuthReducer,
