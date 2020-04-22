@@ -14,21 +14,13 @@ import {
 } from "./StyledFormProfileInfo";
 import { Avatar } from "../../../styles";
 import {
-  BackgroundUser,
   Info,
   InfoBlock,
   WrapperUserInfo,
   WrapperContacts,
 } from "../ProfileInfo/StyledProfileInfo";
 import CustomField from "../../common/CustomField/CustomField";
-import {
-  Field,
-  Form,
-  Formik,
-  useFormik,
-  FormikProps,
-  useFormikContext,
-} from "formik";
+import { Field, Form, Formik } from "formik";
 
 const setInfoUser = (userProfile) => {
   return [
@@ -138,7 +130,7 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
       {(props) => {
         console.log(props);
         return (
-          <form onSubmit={props.handleSubmit}>
+          <Form>
             <WrapperUserInfo>
               <Avatar
                 onChange={choosePhoto}
@@ -168,12 +160,10 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
               <InfoBlock>
                 <Info>
                   {setInfoUser(props.values).map((item, index) => (
-                    <input
+                    <CustomField
                       key={index}
                       name={item.name}
                       type={item.type}
-                      onChange={props.handleChange}
-                      onBlur={props.handleBlur}
                       value={item.value}
                       placeholder={item.placeholder}
                     />
@@ -182,12 +172,10 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
 
                 <WrapperContacts>
                   {setInfoUserContacts(props.values).map((item, index) => (
-                    <input
+                    <CustomField
                       key={index}
                       name={item.name}
                       type={item.type}
-                      onChange={props.handleChange}
-                      onBlur={props.handleBlur}
                       value={item.value}
                       placeholder={item.placeholder}
                     />
@@ -200,7 +188,7 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
                 </WrapperButtons>
               </InfoBlock>
             </WrapperUserInfo>
-          </form>
+          </Form>
         );
       }}
     </Formik>

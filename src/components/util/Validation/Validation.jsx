@@ -1,12 +1,13 @@
-import React from "react";
-import { Wrapper } from "../../common/CustomField/StyledCustomField";
-
 export const requiredField = (value) => {
-  if (value) return undefined;
-
-  return "field is required";
+  if (!value) return "Field is required";
 };
 
-export const maxLengthCreator = (maxLength) => (value) => {
-  if (value.length > maxLength) return `Max lenght ${maxLength} or lest`;
+export const invalidEmail = (value) => {
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))
+    return "Invalid email address";
+};
+
+export const minLengthCreator = (minLength) => (value) => {
+  if (value.length < minLength)
+    return `Field must have no least ${minLength} symbols`;
 };

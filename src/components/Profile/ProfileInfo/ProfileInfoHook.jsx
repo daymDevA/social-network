@@ -29,7 +29,6 @@ const ProfileInfoHook = ({
   const [isShowBackgroundEditButton, setIsShowBackgroundEditButton] = useState(
     false
   );
-
   const [infoProfile, setInfoProfile] = useState(userProfile);
   const [
     isClickedBackgroundEditButton,

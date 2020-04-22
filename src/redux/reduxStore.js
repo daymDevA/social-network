@@ -4,7 +4,7 @@ import reducerProfilePage from "./reducerProfilePage";
 import reducerDialogsPage from "./reducerDialogsPage";
 import reducerUsersFind from "./reducerUsersFind";
 import reducerAuth from "./reducerAuth";
-import { reducer as formReducer } from "redux-form";
+
 import reducerApp from "./reducerApp";
 
 const reducers = combineReducers({
@@ -13,7 +13,6 @@ const reducers = combineReducers({
   users: reducerUsersFind,
   auth: reducerAuth,
   app: reducerApp,
-  form: formReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

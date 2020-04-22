@@ -67,7 +67,6 @@ export const unFollowUser = (id) => {
 };
 
 export const logIn = (email, password, rememberMe, captcha) => {
-  console.log(email, password, rememberMe);
   return instance
     .post("auth/login", { email, password, rememberMe, captcha })
     .then((response) => {

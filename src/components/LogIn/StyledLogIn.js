@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Form } from "formik";
 
 export const WrapperLogIn = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ export const Title = styled.h2`
   display: block;
 `;
 
-export const FormLogin = styled.form`
+export const FormLogin = styled(Form)`
   border-radius: 20px;
   display: block;
   border: 1px solid #d7d7db;
@@ -56,5 +57,12 @@ export const WrapperCheckbox = styled.div`
     color: #6f9dea;
     top: 0px;
     margin-right: 20px;
+  }
+`;
+
+export const WrapperModuleCaptcha = styled.div`
+  text-align: center;
+  img {
+    margin-bottom: 10px;
   }
 `;

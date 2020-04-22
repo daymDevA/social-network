@@ -11,13 +11,14 @@ import FindUsersContainer from "./components/FindUsers/FindUsersContainer";
 import Profile from "./components/Profile/Profile";
 import LogIn from "./components/LogIn/LogIn";
 import { initializatedApp } from "./redux/reducerApp";
-
-import "./App.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { setUserData } from "./redux/reducerAuth";
 import Preloader from "./components/common/Preloader/Preloader";
 import ProfileAPIContainer from "./components/Profile/ProfileAPIContainer";
+
+import "antd/dist/antd.css";
+import "./App.css";
 
 class App extends React.Component {
   componentDidMount() {

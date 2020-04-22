@@ -48,7 +48,6 @@ export const setUserData = () => (dispatch) => {
 export const logIn = (email, password, rememberMe, captcha) => (dispatch) => {
   api.logIn(email, password, rememberMe, captcha).then((response) => {
     if (response.data.resultCode === 0) {
-      debugger;
       dispatch(
         setUserData({
           id: response.data.userId,
