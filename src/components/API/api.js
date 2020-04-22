@@ -67,17 +67,11 @@ export const unFollowUser = (id) => {
 };
 
 export const logIn = (email, password, rememberMe, captcha) => {
-  return instance
-    .post("auth/login", { email, password, rememberMe, captcha })
-    .then((response) => {
-      return response;
-    });
+  return instance.post("auth/login", { email, password, rememberMe, captcha });
 };
 
 export const logOut = () => {
-  return instance.delete("auth/login").then((response) => {
-    return response;
-  });
+  return instance.delete("auth/login");
 };
 
 export const getCaptcha = () => {

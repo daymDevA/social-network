@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileInfoHook from "./ProfileInfo/ProfileInfoHook";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 import {
   setUserProfile,
@@ -27,10 +27,11 @@ class ProfileAPIConteiner extends React.Component {
 
   render() {
     return (
-      <ProfileInfoHook
+      <ProfileInfo
         userProfile={this.props.userProfile}
         userId={this.props.userId}
         uploadFile={this.props.uploadFile}
+        isChangedPhoto={this.props.isChangedPhoto}
         status={this.props.status}
         updateUserProfile={this.props.updateUserProfile}
         updateStatus={this.props.updateStatus}
@@ -43,6 +44,7 @@ const mapStateToProps = (state) => {
   return {
     userProfile: state.profilePage.userProfile,
     status: state.profilePage.status,
+    isChangedPhoto: state.profilePage.isChangedPhoto,
   };
 };
 

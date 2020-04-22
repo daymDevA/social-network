@@ -9,26 +9,9 @@ import { useRef } from "react";
 import { useField } from "formik";
 import { Checkbox, Popover } from "antd";
 
-const CallOutSide = (ref, setIsShowDataError) => {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsShowDataError(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-};
-
 const CustomField = ({ placeholder, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const [isShowDataError, setIsShowDataError] = useState(false);
-  const wrapperRef = useRef(null);
-
-  CallOutSide(wrapperRef, setIsShowDataError);
 
   const text = <span>Error!!</span>;
   const content = (
@@ -64,10 +47,7 @@ const CustomField = ({ placeholder, ...props }) => {
                 placeholder={placeholder}
                 red
               />
-              <IconError
-                ref={wrapperRef}
-                onClick={() => setIsShowDataError(true)}
-              >
+              <IconError onClick={() => setIsShowDataError(true)}>
                 <FontAwesomeIcon icon={faExclamationCircle} />
               </IconError>
             </>

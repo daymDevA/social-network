@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export const StyledIconUploadFile = styled.div`
+  align-self: center;
+  font-size: 41px;
+  color: #d7d7db96;
+  margin-left: calc(50% - 25px);
+  justify-self: center;
+`;
+
 export const Avatar = styled.label`
   display: inline-block;
   height: 180px;
@@ -12,13 +20,6 @@ export const Avatar = styled.label`
   background-size: cover;
   position: relative;
   border-radius: 15px;
-  div {
-    align-self: center;
-    font-size: 41px;
-    color: #d7d7db;
-    margin-left: calc(50% - 25px);
-    justify-self: center;
-  }
 `;
 
 export const Input = styled.input`
@@ -34,4 +35,8 @@ export const Input = styled.input`
   width: 100%;
   color: #6b6b6b;
   position: relative;
+`;
+
+export const UploaderFile = styled.input`
+  display: none;
 `;

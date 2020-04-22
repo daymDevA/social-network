@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledIconUploadFile } from "../../../styles";
 
 export const Button = styled.button`
   display: block;
@@ -35,10 +36,6 @@ export const AvatarWrapperEditPencil = styled(WrapperEditPencil)`
   box-sizing: border-box;
 `;
 
-export const UploaderFile = styled.input`
-  display: none;
-`;
-
 export const SaveButton = styled(Button)`
   align-self: flex-end;
   padding: 0px 5px;
@@ -62,4 +59,11 @@ export const WrapperButtons = styled.div`
   display: flex;
   position: relative;
   flex-direction: row;
+`;
+
+export const StyledIconBackgroundPhoto = styled(StyledIconUploadFile)`
+  top: calc(50% - 50px);
+  cursor: pointer;
+  position: relative;
+  font-size: 60px;
 `;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import backgroundLarge from "../../../assets/images/backgroundLarge.jpg";
-import men from "../../../assets/images/men.jpg";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import EditProfileBackground from "../EditProfileBackground/EditProfileBackground";
@@ -13,15 +12,76 @@ import {
   BackgroundUser,
   Info,
   InfoBlock,
+  photos,
+  isChangedPhoto,
   WrapperUserInfo,
   WrapperContacts,
 } from "./StyledProfileInfo";
 import FormProfileInfo from "../EditModeProfileInfo/FormProfileInfo";
 import { Avatar } from "../../../styles";
 
-const ProfileInfoHook = ({
+const setInfoBlock = (info, userStatus) => {
+  return [
+    { context: "Name:", value: info.fullName },
+    { context: "Status:", value: userStatus },
+    { context: "About Me:", value: info.aboutMe },
+    {
+      context: " Looking for a job:",
+      value: info.lookingForAJob ? `Yes` : `No`,
+    },
+    {
+      context: " Looking for a job description:",
+      value: info.lookingForAJobDescription,
+    },
+  ];
+};
+
+const setContacts = (contacts) => {
+  return [
+    {
+      value: contacts.youtube,
+      context: "YouTube:",
+    },
+    {
+      value: contacts.vk,
+      context: "VK:",
+    },
+    {
+      value: contacts.twitter,
+      context: "Twitter:",
+    },
+    {
+      value: contacts.website,
+      context: "Web Side:",
+    },
+    {
+      value: contacts.instagram,
+      placeholder: "Instagram:",
+    },
+    {
+      value: contacts.github,
+      context: "Github:",
+    },
+    {
+      value: contacts.mainLink,
+      context: "MainLink:",
+    },
+  ];
+};
+
+const getData = (array) => {
+  const newArray = array.map((item, index) => {
+    return (
+      <label key={index} htmlFor="">{`${item.context} ${item.value}`}</label>
+    );
+  });
+  return newArray;
+};
+
+const ProfileInfo = ({
   userProfile,
   status,
+  isChangedPhoto,
   uploadFile,
   updateStatus,
   updateUserProfile,
@@ -29,14 +89,18 @@ const ProfileInfoHook = ({
   const [isShowBackgroundEditButton, setIsShowBackgroundEditButton] = useState(
     false
   );
+
   const [infoProfile, setInfoProfile] = useState(userProfile);
+
   const [
     isClickedBackgroundEditButton,
     setIsClickedBackgroundEditButton,
   ] = useState(false);
+
   const [isShowInfoBlockEditButton, setIsShowInfoBlockEditButton] = useState(
     false
   );
+
   const [
     isClickedInfoBlockEditButton,
     setIsClickedInfoBlockEditButton,
@@ -52,7 +116,6 @@ const ProfileInfoHook = ({
   const saveChangedInfoBlock = (profile, flag) => {
     updateStatus(infoProfile.userId, profile.status);
     updateUserProfile(profile);
-
     setIsClickedInfoBlockEditButton(flag);
   };
 
@@ -61,8 +124,9 @@ const ProfileInfoHook = ({
       {isClickedBackgroundEditButton ? (
         <EditProfileBackground
           setIsClickedBackgroundEditButton={setIsClickedBackgroundEditButton}
-          // save={setIsClickedBackgroundEditButton}
+          photo={userProfile.photos.large}
           uploadFile={uploadFile}
+          isChangedPhoto={isChangedPhoto}
         />
       ) : (
         <BackgroundUser
@@ -73,7 +137,7 @@ const ProfileInfoHook = ({
               infoProfile.photos.large !== null &&
               infoProfile.photos.large !== ""
                 ? infoProfile.photos.large
-                : backgroundLarge
+                : ""
             })`,
           }}
         >
@@ -97,7 +161,9 @@ const ProfileInfoHook = ({
           save={saveChangedInfoBlock}
           userProfile={userProfile}
           status={userStatus}
+          photo={userProfile.photos.small}
           uploadFile={uploadFile}
+          setIsClickedInfoBlockEditButton={setIsClickedInfoBlockEditButton}
         />
       ) : (
         <WrapperUserInfo
@@ -109,42 +175,21 @@ const ProfileInfoHook = ({
               backgroundImage: `url(${
                 userProfile.photos.small !== null
                   ? userProfile.photos.small
-                  : men
+                  : ""
               })`,
             }}
           ></Avatar>
 
           <InfoBlock>
-            <Info>
-              <label htmlFor="">Name: {userProfile.fullName}</label>
-              <label htmlFor="">Status: {userStatus}</label>
-              <label htmlFor="">About Me: {userProfile.aboutMe}</label>
-              <label htmlFor="">
-                Looking for a job: {userProfile.lookingForAJob ? `Yes` : `No`}
-              </label>
-              <label htmlFor="">
-                Looking for a job description:
-                {userProfile.lookingForAJobDescription}
-              </label>
-            </Info>
+            <Info>{getData(setInfoBlock(infoProfile, status))}</Info>
 
             <WrapperContacts>
-              <label htmlFor="">Youtube: {userProfile.contacts.youtube}</label>
-              <label htmlFor="">VK: {userProfile.contacts.vk}</label>
-              <label htmlFor="">Twitter: {userProfile.contacts.twitter}</label>
-              <label htmlFor="">
-                Instagram: {userProfile.contacts.instagram}
-              </label>
-              <label htmlFor="">Web Side: {userProfile.contacts.website}</label>
-              <label htmlFor="">Github: {userProfile.contacts.github}</label>
-              <label htmlFor="">
-                MainLink: {userProfile.contacts.mainLink}
-              </label>
+              {getData(setContacts(infoProfile.contacts))}
             </WrapperContacts>
             {isShowInfoBlockEditButton ? (
               <WrapperButtons>
                 <InfoBlockWrapperEditPencil
-                  onClick={setIsClickedInfoBlockEditButton}
+                  onClick={() => setIsClickedInfoBlockEditButton(true)}
                 >
                   <FontAwesomeIcon icon={faPencilAlt} />
                 </InfoBlockWrapperEditPencil>
@@ -159,4 +204,4 @@ const ProfileInfoHook = ({
   );
 };
 
-export default React.memo(ProfileInfoHook);
+export default ProfileInfo;

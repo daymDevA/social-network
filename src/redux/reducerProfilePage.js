@@ -93,22 +93,37 @@ const reducerProfilePage = (state = initialState, action) => {
         ],
       };
 
-    case SET_USER_PROFILE:
+    case SET_USER_PROFILE: {
+      const time = new Date().getTime();
       return {
         ...state,
-        userProfile: action.userProfile,
+        userProfile: {
+          ...action.userProfile,
+          photos: {
+            small: `${action.userProfile.photos.small}&${time}`,
+            large: `${action.userProfile.photos.large}&${time}`,
+          },
+        },
       };
-
+    }
     case USER_ID:
       return {
         ...state,
         userId: action.userId,
       };
-    case SET_PHOTOS:
+    case SET_PHOTOS: {
+      const time = new Date().getTime();
       return {
         ...state,
-        photos: action.photos,
+        userProfile: {
+          ...state.userProfile,
+          photos: {
+            small: `${action.photos.small}&${time}`,
+            large: `${action.photos.large}&${time}`,
+          },
+        },
       };
+    }
     default:
       return { ...state };
   }
@@ -161,8 +176,9 @@ export const getCaptcha = () => (dispatch) => {
 
 export const uploadFile = (file) => (dispatch) => {
   api.uploadFile(file).then((response) => {
+    console.log(response);
     if (response.data.resultCode === 0) {
-      dispatch(setPhoto(response.data.photos));
+      dispatch(setPhoto(response.data.data.photos));
     }
   });
 };
@@ -187,6 +203,7 @@ export const setUserID = (userId) => {
 };
 
 export const setPhoto = (photos) => {
+  console.log(photos);
   return {
     type: "SET_PHOTOS",
     photos,

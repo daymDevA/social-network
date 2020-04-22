@@ -7,12 +7,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import picture from "../../../assets/images/picture.jpg";
 import {
-  UploaderFile,
   SaveButton,
   AvatarWrapperEditPencil,
   WrapperButtons,
 } from "./StyledFormProfileInfo";
-import { Avatar } from "../../../styles";
+
+import { Avatar, UploaderFile, StyledIconUploadFile } from "../../../styles";
 import {
   Info,
   InfoBlock,
@@ -20,7 +20,7 @@ import {
   WrapperContacts,
 } from "../ProfileInfo/StyledProfileInfo";
 import CustomField from "../../common/CustomField/CustomField";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 
 const setInfoUser = (userProfile) => {
   return [
@@ -96,10 +96,17 @@ const setInfoUserContacts = (contacts) => {
   ];
 };
 
-const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
+const FormProfileInfo = ({
+  save,
+  status,
+  userProfile,
+  uploadFile,
+  setIsClickedInfoBlockEditButton,
+}) => {
   const choosePhoto = (e) => {
     uploadFile(e.target.files[0]);
   };
+
   return (
     <Formik
       initialValues={{
@@ -123,12 +130,11 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
           contacts: values,
           photos: { small: null, large: null },
         };
-        console.log(profile);
+
         save(profile, false);
       }}
     >
       {(props) => {
-        console.log(props);
         return (
           <Form>
             <WrapperUserInfo>
@@ -143,9 +149,10 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
                   })`,
                 }}
               >
-                <div>
+                <StyledIconUploadFile>
                   <FontAwesomeIcon icon={faCloudUploadAlt} />
-                </div>
+                </StyledIconUploadFile>
+
                 <UploaderFile
                   type="file"
                   id="file-upload"
@@ -153,10 +160,6 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
                   accept="image/png, image/jpeg"
                 />
               </Avatar>
-              <AvatarWrapperEditPencil>
-                <FontAwesomeIcon icon={faPencilAlt} />
-              </AvatarWrapperEditPencil>
-
               <InfoBlock>
                 <Info>
                   {setInfoUser(props.values).map((item, index) => (
@@ -183,8 +186,16 @@ const FormProfileInfo = ({ save, status, userProfile, uploadFile }) => {
                 </WrapperContacts>
 
                 <WrapperButtons>
+                  <AvatarWrapperEditPencil>
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                  </AvatarWrapperEditPencil>
+
                   <SaveButton type="submit">Save</SaveButton>
-                  <SaveButton>Cancel</SaveButton>
+                  <SaveButton
+                    onClick={() => setIsClickedInfoBlockEditButton(false)}
+                  >
+                    Cancel
+                  </SaveButton>
                 </WrapperButtons>
               </InfoBlock>
             </WrapperUserInfo>

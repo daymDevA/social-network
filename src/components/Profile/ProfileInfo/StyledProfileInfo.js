@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
-export const BackgroundUser = styled.div`
+export const BackgroundUser = styled.label`
   height: 200px;
   margin-bottom: 20px;
+  display: block;
+  cursor: pointer;
   border: 1px solid #d7d7db;
   border-radius: 15px;
   background-position: bottom;
